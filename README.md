@@ -2,7 +2,7 @@
 ## task 2
 parsing_json.py
 
-using file_to_parse.json
+parsing a file: file_to_parse.json
 
 
 ## task 3
