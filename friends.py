@@ -12,7 +12,12 @@ geolocator = Nominatim(user_agent="specify_your_app_name_here", timeout=100)
 geocode = RateLimiter(geolocator.geocode, min_delay_seconds=0.1, max_retries=1)
 
 
-def getting_json(username):
+def getting_json(username: str) -> dict:
+    '''
+    this function returns a dictionary
+    made from a json object that is taken from twitter api
+    with 25 entries
+    '''
     TWITTER_URL = 'https://api.twitter.com/1.1/friends/list.json'
 
     ctx = ssl.create_default_context()
@@ -30,7 +35,11 @@ def getting_json(username):
         return js
 
 
-def getting_locations(json_dict):
+def getting_locations(json_dict: dict) -> dict:
+    '''
+    returns a dictionary with location as keys and screen names
+    as values
+    '''
     locations_dict = {}
     for user in json_dict['users']:
         if user['location'] != '':
@@ -38,7 +47,11 @@ def getting_locations(json_dict):
     return locations_dict
 
 
-def re_locations(locations_dict):
+def re_locations(locations_dict: dict) -> list:
+    '''
+    returns a list of tuples which contain
+    location name, username, lattitude and longtitude
+    '''
     points = []
     for loc in locations_dict:
         location = geolocator.geocode(loc)
@@ -50,6 +63,10 @@ def re_locations(locations_dict):
 
 
 def marking_locations(location_list: list):
+    '''
+    adds a layer of popups of locations 
+    from location_list to the folium map
+    '''
     fg_friends = folium.FeatureGroup(name="Friends")
 
     for loc in location_list:
