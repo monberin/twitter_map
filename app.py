@@ -5,13 +5,10 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    print("INDEX")
     if request.method == "GET":
-        print("GET")
         return render_template("index.html")
 
     if request.method == "POST":
-        print("POST")
         try:
             if request.form['contents'] != '':
                 friends.main(request.form['contents'])
